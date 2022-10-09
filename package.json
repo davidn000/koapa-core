@@ -1,0 +1,12 @@
+{
+  "name": "koapa-core",
+  "module": "entry-point.ts",
+  "type": "module",
+  "scripts": {
+    "start": "bun src/server.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.18",
+    "bun-types": "^0.1.11"
+  }
+}

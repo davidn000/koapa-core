@@ -1,0 +1,1 @@
+// To start the server run bun entry-point.ts
