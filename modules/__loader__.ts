@@ -1,29 +1,19 @@
 
+// koapa.env.ts //
+import * as KoapaConfig from '../koapa.env'
+// koapa.env.ts //
+
+
 // Controller Imports //
 
-import { APIController } from "./controllers/api-controller";
-import { MiddlewareController } from "./controllers/middleware-controller";
+import APIController from "./controllers/api-controller";
+import { Middleware } from "./controllers/middleware-controller";
 
 // End Controller Imports //
 
 
 
-// Controller Exports //
 
-export const API = {
-    APIController
-};
-
-// End Controller Exports //
-
-
-// Middleware Exports //
-
-export const Middleware = {
-    MiddlewareController
-}
-
-// End Middleware Exports //
 
 
 
@@ -31,6 +21,10 @@ export const Middleware = {
 
 // Default Export //
 
-export default {};
+export {
+    Middleware,
+    KoapaConfig,
+    APIController,
+};
 
 // End Default Export //

@@ -1,9 +1,10 @@
+import { Middleware } from "../modules/__loader__";
 
-class APIRouter {
-
+class APIRouter extends Middleware.MiddlewareController {
+    onRequest(ctx:any):void {
+        // ...
+    }
+    
 }
 
-
-export {
-    APIRouter
-}
+export default new APIRouter();

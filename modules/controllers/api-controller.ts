@@ -1,21 +1,9 @@
-import { Middleware } from '../__loader__';
-
-abstract class APIController 
+export default abstract class APIController 
 {
+    protected abstract onRequest(ctx:any):void;
 
-    abstract onRequest(ctx:any):void;
-
-    private middleware(Middleware:Object):void 
-    {
-        for (let key in Middleware) 
-        {
-            // key.
-        }
-    };
-
+    public sendReqeust(ctx:any):void {
+        this.onRequest(ctx);
+    }
     // ...
-}
-
-export {
-    APIController
 }

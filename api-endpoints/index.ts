@@ -1,4 +1,4 @@
-import * as modules from '../modules/__loader__' ;
+import * as __loader__ from '../modules/__loader__' ;
 
-export default modules;
+export default __loader__;
 

@@ -3,10 +3,13 @@
   "module": "entry-point.ts",
   "type": "module",
   "scripts": {
-    "start": "bun src/server.ts"
+    "start": "bun entry-point.ts"
   },
   "devDependencies": {
-    "@types/node": "^18.7.18",
+    "@types/node": "^18.8.3",
     "bun-types": "^0.1.11"
+  },
+  "dependencies": {
+    "bunrest": "^1.1.4"
   }
 }
