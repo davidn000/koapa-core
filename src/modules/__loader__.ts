@@ -10,8 +10,10 @@ import APIController from "./controller/api-controller";
 // End Abstracts //
 
 // Datbase //
+import { DatabaseExpressionChainList } from './database/core-database-types';
+import { DatabaseExpressionChainState } from './database/core-database-enums';
 import CoreDatabase from './database/core-database';
-import WhereColumn from './database/core-where-column';
+import DatabaseExpressionChain from './database/core-db-expression-chain';
 // End Database //
 
 // Error Imports //
@@ -39,9 +41,12 @@ const Abstracts = {
     APIController,
     KoapaError
 };
+
 const Enum = {
-    ErrorCode: KoapaEnv.KoapaErrorCode
+    ErrorCode: KoapaEnv.KoapaErrorCode,
+    DatabaseExpressionChainState: DatabaseExpressionChainState
 };
+
 // Export Groups //
 
 
@@ -52,16 +57,26 @@ const Enum = {
 // Default Export //
 
 export {
-    Abstracts as Abstracts,
-    Enum as Enum,
-    KoapaEnv as KoapaEnv,
-    CoreDatabase as CoreDatabase,
-    WhereColumn as WhereColumn,
+    Abstracts as Abstracts, // Abstract data types or classes
+    Enum as Enum, // All software enum convenieitly grouped
+    KoapaEnv as KoapaEnv, // config
+
+
     KoapaContext,
     KoapaError as KoapaError,
     KoapaJSONResponseError,
     KoapaJSONResponse,
     APIController as APIController,
+    
+    
+    // Database //
+    CoreDatabase as CoreDatabase,
+    DatabaseExpressionChain as DatabaseExpressionChain,
+        // - start db types - //
+        // DatabaseExpressionChainList,
+        // - end db types - //
+    
+    // End db //
 };
 
 // End Default Export //

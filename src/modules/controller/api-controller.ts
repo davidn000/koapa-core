@@ -1,4 +1,4 @@
-import { KoapaJSONResponseError, KoapaJSONResponse, KoapaContext } from "../__loader__";
+import { KoapaJSONResponseError, KoapaContext } from "../__loader__";
 
 
 export default abstract class APIController 
@@ -17,7 +17,8 @@ export default abstract class APIController
     private handleRequestError(e: any): KoapaJSONResponseError {
         return new KoapaJSONResponseError({
             message: e.message,
-            status: e.status
+            status: e.status,
+            details: e.details ?? {},
         });
     }
     // ...

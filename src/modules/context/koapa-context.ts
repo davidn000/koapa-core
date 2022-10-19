@@ -1,7 +1,16 @@
 import { BunRequest } from "bunrest/src/server/request";
 import { BunResponse } from "bunrest/src/server/response";
-import { APIController, KoapaJSONResponse, KoapaJSONResponseError, CoreDatabase } from "../__loader__";
+import { APIController, KoapaJSONResponse, CoreDatabase, KoapaError } from "../__loader__";
 
+
+/**
+ * @class KoapaContext
+ * @description The context of the request. This is passed to the APIController.onRequest() method.
+ * @param {BunRequest} request The request object.
+ * @param {BunResponse} response The response object.
+ * @param {APIController} controller The api controller aka business logic.
+ * 
+ */
 export default class KoapaContext {
     public readonly request: BunRequest;
     private controllerResponse: any;
@@ -20,21 +29,21 @@ export default class KoapaContext {
         this.bunResponse = bunResponse;
         this.controllerResponse = controller.sendReqeust(this);
 
-        if (this.controllerResponse instanceof KoapaJSONResponseError) {
+        if (this.controllerResponse instanceof KoapaError) {
             this.sendError(this.controllerResponse);
         }
     }
 
     public async onError(callback: (e: Error) => void): Promise<void> {
 
-        if (this.controllerResponse instanceof KoapaJSONResponseError) {
+        if (this.controllerResponse instanceof KoapaError) {
             callback(this.controllerResponse);
         }
 
     }
 
     public async onSuccess(callback: (response: KoapaContext) => void): Promise<void> {
-        if (!(this.controllerResponse instanceof KoapaJSONResponseError)) {
+        if (!(this.controllerResponse instanceof KoapaError)) {
             callback(this);
         }
     }
@@ -87,11 +96,8 @@ export default class KoapaContext {
         this.setResponse(response, status).sendResponse();
     }
 
-    public sendError(koapaJSONResponseError: KoapaJSONResponseError) {
-        this.bunResponse.status(koapaJSONResponseError.status).json({
-            message: koapaJSONResponseError.message,
-            status: koapaJSONResponseError.status
-        });
+    public sendError(koapaError: KoapaError) {
+        this.bunResponse.status(koapaError.status).json(koapaError.json());
     }
 
 

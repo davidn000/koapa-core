@@ -1,14 +1,30 @@
-import { Database, Statement } from "bun:sqlite";
-import WhereColumn from "./core-where-column";
+import { Database } from "bun:sqlite";
+import KoapaError from "../errors/koapa-error";
+import { DatabaseExpressionChainState } from "./core-database-enums";
+import { DatabaseExpressionChainList } from "./core-database-types";
+import DatabaseExpressionChain from "./core-db-expression-chain";
+
+/** UPPERCASE */
+enum DatabaseQueryResult {
+    SUCCESS = 0,
+    ERROR = 1,
+    NO_RESULTS = 2,
+}
+
+enum DatabaseState {
+    RUNNING_QUERY,
+    IDLE,
+    ERROR,
+}
 
 /**
  * @class CoreDatabase
  * @singleton
  * @classdesc CoreDatabase is a class that provides a syncronous database connection using Bun's bundled databases. It uses SQLite3 and will act as a modular component that can be replaced for an alternative system.
+ * @todo Add state to the database to allow for memory storage of previously completed queries and chaining.
  */
 export default class CoreDatabase {
     private _database: Database;
-
     public constructor() {
         this._database = new Database("koapa-core.db"); // for now, all databases will be kept inline with the application, however eventually I would like to see it migrate to a hybrid system where the database is either kept on the server if in active use, and in amazon s3 if not.
     }
@@ -83,14 +99,29 @@ export default class CoreDatabase {
      * db.select('users', {username}).where((columns) => {return columns.userid.});
      * @param callback The callback function that returns a boolean
      */
-    public where(callback: (columns) => any) {
+    public where(callback: (columns: DatabaseExpressionChainList) => any) {
 
+        /** List of all columns */
         const columnsObj = {
-            userid: new WhereColumn('userid'),
-            username: new WhereColumn('username'),
-            password: new WhereColumn('password'),
-        };
-        callback(columnsObj);
+            userid: new DatabaseExpressionChain('userid'),
+            username: new DatabaseExpressionChain('username'),
+            password: new DatabaseExpressionChain('password'),
+        } as DatabaseExpressionChainList;
+        const returnedData = callback(columnsObj);
+        if (returnedData.state === DatabaseExpressionChainState.COMPLETED) {
+            // Chain was succesful, and it means we have a completed query string as the return
+            
+        }else {
+            throw new KoapaError(
+                {
+                    message: 'Error: The where clause chain was not completed. Check details for more details.', 
+                    status: 500, 
+                    details: {
+                        expressionBeforeAndClause: returnedData._oldExpression,
+                    }
+                }
+            );
+        }
         return this;
     }
 
