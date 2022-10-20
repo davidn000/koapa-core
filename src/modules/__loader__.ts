@@ -56,6 +56,11 @@ const Enum = {
 
 // Default Export //
 
+
+// Singleton initialization //
+const CoreDatabaseInstance = new CoreDatabase() as CoreDatabase;
+
+
 export {
     Abstracts as Abstracts, // Abstract data types or classes
     Enum as Enum, // All software enum convenieitly grouped
@@ -71,6 +76,7 @@ export {
     
     // Database //
     CoreDatabase as CoreDatabase,
+    CoreDatabaseInstance as CoreDatabaseInstance,
     DatabaseExpressionChain as DatabaseExpressionChain,
         // - start db types - //
         // DatabaseExpressionChainList,

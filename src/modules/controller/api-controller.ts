@@ -15,6 +15,7 @@ export default abstract class APIController
     }
 
     private handleRequestError(e: any): KoapaJSONResponseError {
+        console.warn(e);
         return new KoapaJSONResponseError({
             message: e.message,
             status: e.status,

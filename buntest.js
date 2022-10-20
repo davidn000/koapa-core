@@ -3,7 +3,7 @@ import server from "bunrest";
 
 
 const app = server();
-app.get('/examples-endpoint', (request, response) => {
+app.get('/', (request, response) => {
     response.status(200).json({message:"hello world!"});
 });
 app.get('/examples', (request, response) => {
@@ -12,6 +12,6 @@ app.get('/examples', (request, response) => {
 });
 
 app.listen(4000, () => {
-    console.log('App is listening on port 3000');
+    console.log('App is listening on port 4000');
 });
 

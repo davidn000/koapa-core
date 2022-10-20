@@ -1,6 +1,6 @@
 import { BunRequest } from "bunrest/src/server/request";
 import { BunResponse } from "bunrest/src/server/response";
-import { APIController, KoapaJSONResponse, CoreDatabase, KoapaError } from "../__loader__";
+import { APIController, KoapaJSONResponse, CoreDatabase, CoreDatabaseInstance, KoapaError } from "../__loader__";
 
 
 /**
@@ -13,10 +13,10 @@ import { APIController, KoapaJSONResponse, CoreDatabase, KoapaError } from "../_
  */
 export default class KoapaContext {
     public readonly request: BunRequest;
-    private controllerResponse: any;
+    private readonly controllerResponse: any;
     private readonly bunResponse: BunResponse;
     private readonly _response: KoapaJSONResponse;
-    private readonly _database: CoreDatabase = new CoreDatabase();
+    private readonly _database: CoreDatabase = CoreDatabaseInstance;
 
 
     constructor(
@@ -34,15 +34,14 @@ export default class KoapaContext {
         }
     }
 
-    public async onError(callback: (e: Error) => void): Promise<void> {
+    public async onError(callback: (e: Error) => void) {
 
         if (this.controllerResponse instanceof KoapaError) {
             callback(this.controllerResponse);
         }
 
     }
-
-    public async onSuccess(callback: (response: KoapaContext) => void): Promise<void> {
+    public async onSuccess(callback: (response: KoapaContext) => void) {
         if (!(this.controllerResponse instanceof KoapaError)) {
             callback(this);
         }
@@ -97,7 +96,7 @@ export default class KoapaContext {
     }
 
     public sendError(koapaError: KoapaError) {
-        this.bunResponse.status(koapaError.status).json(koapaError.json());
+        this.bunResponse.status(koapaError.status as number).json(koapaError.json());
     }
 
 
