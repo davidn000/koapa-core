@@ -1,3 +1,4 @@
+import { KoapaEnv, KoapaError } from "../__loader__";
 import { DatabaseExpressionChainState } from "./core-database-enums";
 
 export default class DatabaseExpressionChain {
@@ -38,7 +39,10 @@ export default class DatabaseExpressionChain {
 
     public and(databaseExpressionChain: DatabaseExpressionChain): DatabaseExpressionChain {
         if (databaseExpressionChain === undefined) {
-            throw new Error("Cannot use undefined as an 'and' clause.");
+            throw new KoapaError({
+                message: "Cannot use undefined as an 'and' check paramter.",
+                status: KoapaEnv.KoapaErrorCode.DATABASE_UNDEFINED_CHAIN_COMPONENT_PARAMATER
+            });
         }
         databaseExpressionChain.oldExpression = this._currentExpression + ' AND ';
         this._state = DatabaseExpressionChainState.ACTIVE;
@@ -51,7 +55,10 @@ export default class DatabaseExpressionChain {
 
     public greaterThan(value: any): DatabaseExpressionChain {
         if (value === undefined) {
-            throw new Error("Cannot use undefined as an 'greaterThan' check paramter.");
+            throw new KoapaError({
+                message: "Cannot use undefined as an 'greaterThan' check paramter.",
+                status: KoapaEnv.KoapaErrorCode.DATABASE_UNDEFINED_CHAIN_COMPONENT_PARAMATER
+            });
         }
 
         if (typeof value === typeof DatabaseExpressionChain) {
@@ -67,7 +74,10 @@ export default class DatabaseExpressionChain {
     }
     public lessThan(value: any): DatabaseExpressionChain {
         if (value === undefined) {
-            throw new Error("Cannot use undefined as an 'lessThan' check paramter.");
+            throw new KoapaError({
+                message: "Cannot use undefined as an 'lessThan' check paramter.",
+                status: KoapaEnv.KoapaErrorCode.DATABASE_UNDEFINED_CHAIN_COMPONENT_PARAMATER
+            });
         }
 
         if (typeof value === typeof DatabaseExpressionChain) {
@@ -82,7 +92,10 @@ export default class DatabaseExpressionChain {
 
     public equals(value: any): DatabaseExpressionChain {
         if (value === undefined) {
-            throw new Error("Cannot use undefined as an 'equals' check paramter.");
+            throw new KoapaError({
+                message: "Cannot use undefined as an 'equals' check paramter.",
+                status: KoapaEnv.KoapaErrorCode.DATABASE_UNDEFINED_CHAIN_COMPONENT_PARAMATER
+            });
         }
         if (typeof value === typeof DatabaseExpressionChain) {
             value = value.columnName;
@@ -98,7 +111,10 @@ export default class DatabaseExpressionChain {
 
     public doesNotEquals(value: any): DatabaseExpressionChain {
         if (value === undefined) {
-            throw new Error("Cannot use undefined as an 'doesNotEquals' check paramter.");
+            throw new KoapaError({
+                message: "Cannot use undefined as an 'doesNotEquals' check paramter.",
+                status: KoapaEnv.KoapaErrorCode.DATABASE_UNDEFINED_CHAIN_COMPONENT_PARAMATER
+            });
         }
         if (typeof value === typeof DatabaseExpressionChain) {
             value = value.columnName;

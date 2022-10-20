@@ -1,6 +1,7 @@
 export const MiddlewareRoutesLocation = '/middleware';
 export const APIEndpointRoutesLocation = '/api-endpoints';
 export enum KoapaErrorCode {
+    // Web response codes //
     // 1xx Informational
     CONTINUE = 100,
     SWITCHING_PROTOCOLS = 101,
@@ -59,5 +60,14 @@ export enum KoapaErrorCode {
     INSUFFICIENT_STORAGE = 507,
     LOOP_DETECTED = 508,
     NOT_EXTENDED = 510,
-    NETWORK_AUTHENTICATION_REQUIRED = 511
+    NETWORK_AUTHENTICATION_REQUIRED = 511,
+    // End Web response codes //
+
+    // Koapa database error codes //
+    DATABASE_EXPRESSION_CHAIN_NOT_COMPLETED = "DATABASE_EXPRESSION_CHAIN_NOT_COMPLETED",
+    DATABASE_EXPRESSION_CHAIN_NOT_STARTED = "DATABASE_EXPRESSION_CHAIN_NOT_STARTED",
+    DATABASE_WHERE_EXPRESSION_NOT_CHAINABLE = "DATABASE_WHERE_EXPRESSION_NOT_CHAINABLE",
+    DATABASE_UNDEFINED_CHAIN_COMPONENT_PARAMATER = "DATABASE_UNDEFINED_CHAIN_COMPONENT_PARAMATER",
+    // End Koapa database error codes //
+
 };
